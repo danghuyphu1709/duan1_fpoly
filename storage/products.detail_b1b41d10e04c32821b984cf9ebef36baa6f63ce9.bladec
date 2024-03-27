@@ -1,0 +1,72 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('main-content'); ?>
+ <section class="container-fluid mt-3ct">
+ <div class="card shadow mb-4">
+ <div class="card-header py-3">
+ <h4 class="text-center">Chi tiết sản phẩm </h4>
+ </div>
+ <div class="card-body">
+ <div class="table-responsive">
+ <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+ <thead>
+ <tr>
+ <th>Tên sản phẩm</th>
+ <th>Giá</th>
+ <th>Số lượng</th>
+ <th>Kích thước</th>
+ <th>Ngày sửa</th>
+ <th>Người sửa</th>
+ <th>Danh mục</th>
+ <th>Trạng thái</th>
+ </tr>
+ </thead>
+ <tbody>
+ <?php $__currentLoopData = $data; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <tr id="list-cate">
+ <td><?php echo \htmlentities($iteams->nameproduct??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities(number_format($iteams->price, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ</td>
+ <td><?php echo \htmlentities($iteams->quantity??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($iteams->namesize??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($iteams->update_at??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($iteams->update_by??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($iteams->namecategory??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td> <?php if($iteams->status == 0): ?>
+ Đang hoạt động
+ <?php elseif($iteams->status == 1): ?>
+ Ngừng hoạt động
+ <?php endif; ?>
+ </td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </tbody>
+
+ </table>
+ <div class="card-header py-3">
+ <h4 class="">Mô tả sản phẩm : </h4>
+ <h5><?php echo \htmlentities($data[0]->description??'', ENT_QUOTES, 'UTF-8', false); ?></h5>
+ </div>
+ </div>
+
+ <div class="ecommerce-gallery" data-mdb-zoom-effect="true" data-mdb-auto-height="true">
+ <div class="row py-3 shadow-5">
+ <?php $__currentLoopData = $data_image; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <div class="col-3 mt-1">
+ <img
+ src="../upload/<?php echo \htmlentities($iteams->source??'', ENT_QUOTES, 'UTF-8', false); ?>";
+ data-mdb-img="<?php echo \htmlentities(route('upload/').$iteams->source??'', ENT_QUOTES, 'UTF-8', false); ?>"
+ alt="Gallery image 1"
+ class="active w-100"
+ />
+ </div>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+ <a href="<?php echo \htmlentities(route('product')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button type="button" class="btn btn-success">Quay lại</button></a>
+ </div>
+ </div>
+ </div>
+ <script src="<?php echo \htmlentities(BASE_URL.'source/customer/js/main.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+ </section>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

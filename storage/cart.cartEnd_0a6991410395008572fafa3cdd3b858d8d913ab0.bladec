@@ -1,0 +1,66 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('main-content'); ?>
+<link rel="stylesheet" href="<?php echo \htmlentities(BASE_URL.'source-user/css/cartEnd.css'??'', ENT_QUOTES, 'UTF-8', false); ?>">
+
+ <div class="container mt-5 h-25" >
+ <div class="text-center">
+ <button type="button" class="btn btn-success launch" data-toggle="modal" data-target="#staticBackdrop"> <i class="fa fa-info"></i> Đặt hàng thành công
+ </button>
+ </div>
+ </div>
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+ <div class="modal-dialog">
+ <div class="modal-content">
+ <div class="modal-body ">
+ <div class="text-right"> <i class="fa fa-close close" data-dismiss="modal"></i> </div>
+
+ <div class="px-4 py-5">
+
+ <h5 class="text-uppercase"><?php echo \htmlentities($_SESSION['username']??'', ENT_QUOTES, 'UTF-8', false); ?></h5>
+
+ <h4 class="mt-5 theme-color mb-5">Cảm ơn bạn đã mua hàng</h4>
+
+ <span class="theme-color">Địa chỉ</span>
+ <div class="mb-3">
+ <hr class="new1">
+ <span><?php echo \htmlentities($bill->name_user??'', ENT_QUOTES, 'UTF-8', false); ?>,<?php echo \htmlentities($bill->phone??'', ENT_QUOTES, 'UTF-8', false); ?></span>
+ <span><?php echo \htmlentities($bill->name_village??'', ENT_QUOTES, 'UTF-8', false); ?>,<?php echo \htmlentities($bill->name_ward??'', ENT_QUOTES, 'UTF-8', false); ?>,<?php echo \htmlentities($bill->name_district??'', ENT_QUOTES, 'UTF-8', false); ?>,<?php echo \htmlentities($bill->name_city??'', ENT_QUOTES, 'UTF-8', false); ?></span>
+ </div>
+ <div class="d-flex justify-content-between">
+ <span class="font-weight-bold">Thanh toán : <?php echo \htmlentities(number_format( $bill->total_mony_after_reduction, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?></span>
+ </div>
+ <?php if($bill->name_voucher): ?>
+ <div class="d-flex justify-content-between">
+ <small>Mã giảm giá : <?php echo \htmlentities($bill->name_voucher??'', ENT_QUOTES, 'UTF-8', false); ?></small>
+ <small></small>
+ </div>
+ <div class="d-flex justify-content-between mt-3">
+ <span class="font-weight-bold">Số tiền sau ap dụng : </span>
+ <span class="font-weight-bold ">  <?php echo \htmlentities(number_format($bill->total_mony_before_reduction, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?></span>
+ </div>
+ <?php else: ?>
+ <div class="d-flex justify-content-between">
+ <small>Mã giảm giá : Không áp dụng</small>
+ <small></small>
+ </div>
+ <?php endif; ?>
+
+ <div class="d-flex justify-content-between">
+ <small>Hình thức thanh toán : <?php echo \htmlentities($bill->name_payment??'', ENT_QUOTES, 'UTF-8', false); ?></small>
+ <small></small>
+ </div>
+
+ <div class="d-flex justify-content-between mt-3">
+ <span class="font-weight-bold">Số tiền thanh toán : </span>
+ <span class="font-weight-bold theme-color">  <?php echo \htmlentities(number_format($bill->total_mony, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ</span>
+ </div>
+ <div class="text-center mt-5">
+ <a href="<?php echo \htmlentities(route('bill')??'', ENT_QUOTES, 'UTF-8', false); ?>"> <button class="btn btn-primary">Danh sách đơn hàng</button></a>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+</div>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout-user.main'); } ?>

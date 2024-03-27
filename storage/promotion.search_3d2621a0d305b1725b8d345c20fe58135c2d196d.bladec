@@ -1,0 +1,81 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('main-content'); ?>
+ <section class="container-fluid mt-3ct">
+ <div class="card shadow mb-4">
+ <div class="card-header py-3">
+ <h4 class="text-center"> Khuyễn mãi </h4>
+ <div class="text-right">
+ </div>
+ </div>
+ <div class="card-body">
+ <form action="<?php echo \htmlentities(route('search-product-promotion/').$id??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+ <div class="row">
+ <div class="col">
+ <input type="hidden" value="<?php echo \htmlentities($id??'', ENT_QUOTES, 'UTF-8', false); ?>" id="promotion_id">
+ <select class="form-control" aria-label="Default select example" id='category_insert' name="category">
+ <option selected value="0">Tất cả sản phẩm</option>
+ <?php $__currentLoopData = $data; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <option value="<?php echo \htmlentities($iteams->id??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($iteams->name??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <div class="col">
+ <input type="text" class="form-control bg-light border-0 small" placeholder="Tên sản phẩm..."
+ aria-label="Search" aria-describedby="basic-addon2" name="product_name">
+ </div>
+ <div class="col">
+ <button class="btn btn-primary" type="submit">
+ <i class="fas fa-search fa-sm"></i>
+ </button>
+ </div>
+ </div>
+ </form>
+ <div class="text-right">
+ <a href="<?php echo \htmlentities(route('apply-now/').$id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <button type="button" class="btn btn-outline-warning">
+ Danh sách đang khuyến mãi
+ </button>
+ </a>
+ </div>
+ <div class="table-responsive mt-3">
+ <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+ <thead>
+ <tr>
+ <th>Code</th>
+ <th>Ảnh sản phẩm</th>
+ <th>Tên sản phẩm</th>
+ <th class="text-right">Thao Tác</th>
+ </tr>
+ </thead>
+ <tbody id="product_insert">
+ <?php if(isset($data2)): ?>
+ <?php $__currentLoopData = $data2; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <tr>
+ <td><?php echo \htmlentities($iteams->code??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><img src="<?php echo \htmlentities(route('upload/').$iteams->products_avata??'', ENT_QUOTES, 'UTF-8', false); ?>" width="100px"></td>
+ <td><?php echo \htmlentities($iteams->product_name??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td class="text-right">
+ <a href=" http://localhost/duan1_fpoly/apply-quantity/<?php echo \htmlentities($iteams->id??'', ENT_QUOTES, 'UTF-8', false); ?>/<?php echo \htmlentities($id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <button type="button" class="btn btn-outline-info">
+ Áp dụng
+ </button>
+ </a>
+ </td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <?php endif; ?>
+ </tbody>
+ </table>
+ <?php if(!isset($data2)): ?>
+ <div style="color: red">Không tìm thấy sản phẩm nào</div>
+ <?php endif; ?>
+ </div>
+ </div>
+ </div>
+ <?php /*         jquery check */ ?>
+ <?php /*        <script src="<?php echo \htmlentities(BASE_URL.'source/customer/js/axios.main.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>*/ ?>
+ </section>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

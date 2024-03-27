@@ -1,0 +1,29 @@
+<!-- Main JS -->
+
+<!-- Bootstrap core JavaScript-->
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/jquery/jquery.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/bootstrap/js/bootstrap.bundle.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/jquery-easing/jquery.easing.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="<?php echo \htmlentities(BASE_URL.'source/js/sb-admin-2.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+
+<!-- Page level plugins -->
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/chart.js/Chart.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+
+<!-- Page level custom scripts -->
+<script src="<?php echo \htmlentities(BASE_URL.'source/js/demo/chart-area-demo.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/js/demo/chart-pie-demo.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<!-- Vendor JS       -->
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/slick/slick.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/wow/wow.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/animsition/animsition.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/counter-up/jquery.waypoints.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/counter-up/jquery.counterup.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/circle-progress/circle-progress.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/perfect-scrollbar/perfect-scrollbar.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/chartjs/Chart.bundle.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<script src="<?php echo \htmlentities(BASE_URL.'source/vendor/select2/select2.min.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>

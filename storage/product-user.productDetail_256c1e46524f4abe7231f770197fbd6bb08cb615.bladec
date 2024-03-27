@@ -1,0 +1,221 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('main-content'); ?>
+<section class="product-details spad">
+ <div class="container">
+ <div class="row">
+ <div class="col-lg-6 col-md-6">
+ <div class="product__details__pic">
+ <div class="product__details__pic__item">
+ <img class="product__details__pic__item--large"
+ src="<?php echo \htmlentities(route('upload/').$product->avata??'', ENT_QUOTES, 'UTF-8', false); ?>" alt="" width="1000px" height="500px">
+ </div>
+ <div class="product__details__pic__slider owl-carousel">
+ <?php $__currentLoopData = $image; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <img data-imgbigurl="<?php echo \htmlentities(route('upload/').$iteams->source??'', ENT_QUOTES, 'UTF-8', false); ?>"
+ src="<?php echo \htmlentities(route('upload/').$iteams->source??'', ENT_QUOTES, 'UTF-8', false); ?>" alt="">
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+ </div>
+ </div>
+ <div class="col-lg-6 col-md-6">
+ <div class="product__details__text">
+ <h3><?php echo \htmlentities($product->name??'', ENT_QUOTES, 'UTF-8', false); ?></h3>
+ <div class="product__details__rating">
+ <i class="fa fa-star"></i>
+ <i class="fa fa-star"></i>
+ <i class="fa fa-star"></i>
+ <i class="fa fa-star"></i>
+ <i class="fa fa-star-half-o"></i>
+ <span>(18 reviews)</span>
+ </div>
+ <div class="product__discount__item__text" style="text-align: left;">
+ <div class="product__item__price"><span style=";font-size: 27px" id="priceAfter"></span></div>
+ </div>
+
+ <div class="product__details__price" id="price">
+
+ </div>
+
+ <p><?php echo \htmlentities($product->description??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <form action="<?php echo \htmlentities(route('cart')??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post" id="form-add-to-cart" autocomplete="off">
+ <input type="hidden" value="<?php echo \htmlentities($_SESSION['csrf_token']??'', ENT_QUOTES, 'UTF-8', false); ?>" name="csrf_token">
+ <input type="hidden" value="<?php echo \htmlentities($product->id??'', ENT_QUOTES, 'UTF-8', false); ?>" name="product_id">
+ <div class="form-group ">
+ <select class="form-select product__details__quantity" id="optionSize" name="product_detail_id">
+ <option value="0"> chọn size </option>
+ <?php $__currentLoopData = $size; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <?php if($iteams->quantity == 0): ?>
+ <option value="<?php echo \htmlentities($iteams->detail_id??'', ENT_QUOTES, 'UTF-8', false); ?>" disabled><?php echo \htmlentities($iteams->name??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php else: ?>
+ <option value="<?php echo \htmlentities($iteams->detail_id??'', ENT_QUOTES, 'UTF-8', false); ?>" ><?php echo \htmlentities($iteams->name??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+
+ <div class="product__details__quantity">
+ <div class="quantity">
+ <div class="pro-qty" id="product-quantity-key">
+ <input type="text" value="1" max="100" min="1" name="quantity" id="product-quantity">
+ </div>
+ </div>
+ </div>
+ <button type="submit" class="primary-btn">ADD TO CARD</button>
+ <div><span id="errors" style="color: red"></span></div>
+
+ </form>
+ <ul>
+ <li><b>Danh mục</b> <span><?php echo \htmlentities($product->category_name??'', ENT_QUOTES, 'UTF-8', false); ?></span></li>
+ <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+ <li><b>Weight</b> <span>0.5 kg</span></li>
+ <li><b>Share on</b>
+ <div class="share">
+ <a href="#"><i class="fa fa-facebook"></i></a>
+ <a href="#"><i class="fa fa-twitter"></i></a>
+ <a href="#"><i class="fa fa-instagram"></i></a>
+ <a href="#"><i class="fa fa-pinterest"></i></a>
+ </div>
+ </li>
+ </ul>
+ </div>
+ </div>
+ <div class="col-lg-12">
+ <div class="product__details__tab">
+ <ul class="nav nav-tabs" role="tablist">
+ <li class="nav-item">
+ <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+ aria-selected="true">Description</a>
+ </li>
+ <li class="nav-item">
+ <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+ aria-selected="false">Reviews <span>(1)</span></a>
+ </li>
+ </ul>
+ <div class="tab-content">
+ <div class="tab-pane active" id="tabs-1" role="tabpanel">
+ <div class="product__details__tab__desc">
+ <h6>Products Infomation</h6>
+ <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+ Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
+ suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
+ vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
+ Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
+ accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
+ pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
+ elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
+ et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
+ vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
+ <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
+ ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
+ elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
+ porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
+ nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+ Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
+ porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
+ sed sit amet dui. Proin eget tortor risus.</p>
+ </div>
+ </div>
+ <div class="tab-pane" id="tabs-3" role="tabpanel">
+ <div class="container bootdey">
+ <div class="col-md-12 bootstrap snippets">
+ <div class="panel">
+ <div class="panel-body">
+ <form class="form-block" id="formComment" method="post">
+ <textarea class="form-control" rows="2" placeholder="What are you thinking?" name="description" id="description"></textarea>
+ <span style="color: red" id="comment_errors"></span>
+ <div class="mar-top clearfix">
+ <button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i>Comment</button>
+ </div>
+ </form>
+ </div>
+ </div>
+ <div class="panel" id="main-content" style="max-height: 500px; overflow: auto;">
+ <?php $__currentLoopData = $comment; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <div class="panel-body">
+ <!-- Newsfeed Content -->
+ <!--===================================================-->
+
+ <?php if($iteams->avatar === null): ?>
+ <a class="media-left"  href="<?php echo \htmlentities(route('profile/').$iteams->account_id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <img class="img-circle img-sm" alt="Profile Picture" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+ </a>
+ <?php else: ?>
+ <a class="media-left" href="<?php echo \htmlentities(route('profile/').$iteams->account_id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <img class="img-circle img-sm" alt="Profile Picture" src="<?php echo \htmlentities(route('upload/').$iteams->avatar??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ </a>
+ <?php endif; ?>
+
+ <div class="media-body">
+ <div class="mar-btm">
+ <a  href="<?php echo \htmlentities(route('profile/').$iteams->account_id??'', ENT_QUOTES, 'UTF-8', false); ?>" class="btn-link text-semibold media-heading box-inline"><?php echo \htmlentities($iteams->name??'', ENT_QUOTES, 'UTF-8', false); ?></a>
+ <p style="color: green" class="mt-2"><?php echo \htmlentities($iteams->name_role??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> <?php echo \htmlentities($iteams->create_at??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ </div>
+ <p class="mar-btm-content"><?php echo \htmlentities($iteams->content??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+ <hr>
+ <!-- Comments -->
+ </div>
+ </div>
+ <!--===================================================-->
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <div class="text-center">
+ <button type="button" class="btn-success">Xem thêm</button>
+ </div>
+ </div>
+ </div>
+
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+</section>
+<!-- Product Details Section End -->
+
+<!-- Related Product Section Begin -->
+<section class="related-product">
+ <div class="container">
+ <div class="row">
+ <div class="col-lg-12">
+ <div class="section-title related__product__title">
+ <h2>Sản phẩm liên quan</h2>
+ </div>
+ </div>
+ </div>
+ <div class="row">
+ <?php $__currentLoopData = $relatedProducts; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $iteams): $loop = $this->incrementLoopIndices();  ?>
+ <div class="col-lg-3 col-md-4 col-sm-6">
+ <div class="product__item">
+ <div class="product__item__pic set-bg"
+ data-setbg="<?php echo \htmlentities(route('upload/').$iteams->avata??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <ul class="product__item__pic__hover">
+ <li><a href="<?php echo \htmlentities(route('productDetail/').$iteams->id??'', ENT_QUOTES, 'UTF-8', false); ?>"><i class="fa fa-shopping-cart"></i></a></li>
+ </ul>
+ </div>
+ <div class="featured__item__text">
+ <span><a href="<?php echo \htmlentities(route('category/').$iteams->category_id??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($iteams->category_name??'', ENT_QUOTES, 'UTF-8', false); ?></a></span>
+ <h6><a href="<?php echo \htmlentities(route('productDetail/').$iteams->id??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($iteams->name??'', ENT_QUOTES, 'UTF-8', false); ?></a></h6>
+ <?php if($iteams->price_max == $iteams->price_min): ?>
+ <h5><?php echo \htmlentities(number_format($iteams->price_min,0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ</h5>
+ <?php else: ?>
+ <h5><?php echo \htmlentities(number_format($iteams->price_min,0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ
+ - <?php echo \htmlentities(number_format($iteams->price_max,0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ</h5>
+ <?php endif; ?>
+ </div>
+ </div>
+ </div>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+ </div>
+ <script src="<?php echo \htmlentities(BASE_URL.'source-user/customer/ajax.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+</section>
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout-user.main'); } ?>

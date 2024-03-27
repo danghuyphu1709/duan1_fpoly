@@ -1,0 +1,96 @@
+
+if(strlen($fileImages['name'][0]) != 0){
+                $invalidImages = ['svg','webp','tif','tiff','bmp','gif','png','jpg','jpeg'];
+                for ($i = 0; $i < $numImages; $i++) {
+                    $extension = pathinfo($fileImages['name'][$i], PATHINFO_EXTENSION);
+                    var_dump($extension);
+                    $checkimage = in_array($extension,$invalidImages);
+                    var_dump($checkimage);
+                    if($checkimage){
+
+                    }
+                    $urlupload ='./upload/'.$fileImages['name'][$i];;
+                    if(move_uploaded_file($fileImages["tmp_name"][$i],$urlupload)){
+                         $checkimage = true;
+                    };
+                }
+            }else{
+                $errors['image'] = "Vui lòng chọn hình ảnh";
+            }
+
+
+
+             <td>{{$iteams->code}}</td>
+                                            <td>{{$iteams->name}}</td>
+                                            <td>{{$iteams->create_at}}</td>
+                                            <td>{{$iteams->create_by}}</td>
+                                            <td> @if ($iteams->deleted == 0)
+                                                    Đang hoạt động
+                                                @elseif ($iteams->deleted == 1)
+                                                    Ngừng hoạt động
+                                                @endif
+                                            </td>
+                                            <td class="text-right">
+                                                <a href="{{ route('apply-promotion/').$iteams->id }}">
+                                                    <button type="button" class="btn btn-outline-info">
+                                                        <i class="fa-solid fa-square-check" style="color: #00ff33; font-size:15px"></i>
+                                                    </button>
+                       </a>
+
+
+            <div class="mb-3">
+                                            <select class="form-control" aria-label="Default select example" id='category_insert'>
+                                                <option selected>Chọn danh mục</option>
+                                                <option value="1" id="categoryid-1">Bánh Mì</option>
+                                                <option value="2" id="categoryid-2">Bánh Ngọt</option>
+                                            </select>
+                                        </div>
+
+
+
+    public function searchCategory($keyword){
+        $sql = "SELECT * FROM ".$this->table."  WHERE  name like CONCAT('%', ?, '%')";
+        $this->setQuery($sql);
+        return $this->loadAllRows([$keyword]);
+    }
+
+
+                                             public function searchCategory(){
+                                                 if($_SERVER['REQUEST_METHOD'] == "POST"){
+                                                     $keyword = trim($_POST['keyword']);
+                                                     $errors = [];
+                                                     if(!empty($keyword)){
+                                                         $data = $this->category->searchCategory($keyword);
+                                                         return $this->render('category.view',compact('data'));
+                                                     }else{
+                                                          $errors['keyword'] = "Vui lòng điền tên danh mục muốn tìm kiếm";
+                                                     }
+                                                     if(!empty($errors)){
+                                                         flash('errors',$errors,'category');
+                                                     }
+                                                 }
+                                             }
+
+
+
+
+
+                                            <form action="{{ route('search-category')}}" method="post"
+                                                              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <input type="text" class="form-control bg-light border-0 small"
+                                                                           placeholder="Tên sản phẩm..."
+                                                                           aria-label="Search" aria-describedby="basic-addon2" name="keyword">
+
+                                                                </div>
+                                                                <div class="col">
+                                                                    <button class="btn btn-primary" type="submit">
+                                                                        <i class="fas fa-search fa-sm"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            @if(isset($_SESSION['errors']) && isset($_GET['msg']))
+                                                                <div style="color: red" class="mt-3">{{$_SESSION['errors']['keyword']}}</div>
+                                                            @endif
+                                                        </form>

@@ -1,0 +1,21 @@
+.btn-cream{
+    color: black;
+    background-color: #FFE4B5;
+    border-color: #FFE4B5;
+}
+.bg-cream{
+    background-color:rgb(255, 228, 181);
+}
+.btn-center{
+    text-align: center;
+}
+.mt-7{
+    margin-top: 50px;
+}
+.mt-3ct{
+    margin-top: 32px;
+}
+.customer-container{
+    margin-top:30px;
+}
+

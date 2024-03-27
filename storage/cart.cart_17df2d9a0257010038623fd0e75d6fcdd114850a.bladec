@@ -1,0 +1,193 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('main-content'); ?>
+<?php 
+ if(!isset($_SESSION['auth'])) {
+ header('Location: ' . BASE_URL . 'login');
+ }
+ ?>
+
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+ <div class="container">
+ <?php if(isset($errors)): ?>
+ <h3 style="color: red"><?php echo \htmlentities($errors??'', ENT_QUOTES, 'UTF-8', false); ?></h3>
+ <?php endif; ?>
+ <?php if(empty($productCart)): ?>
+ <h3 style="color: red">Bạn không có sản phẩm nào trong giỏ hàng <a href="<?php echo \htmlentities(route('home-page')??'', ENT_QUOTES, 'UTF-8', false); ?>">Quay Lại</a></h3>
+ <?php endif; ?>
+ <form action="<?php echo \htmlentities(route('checkoutCart')??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post" id="form-checkout-cart" autocomplete="off">
+ <input type="hidden" value="<?php echo \htmlentities($_SESSION['csrf_token']??'', ENT_QUOTES, 'UTF-8', false); ?>" name="csrf_token">
+ <?php if(!empty($productCart)): ?>
+ <div class="row">
+ <div class="col-lg-12">
+ <div class="shoping__cart__table">
+ <table>
+ <thead>
+ <tr>
+ <th class="shoping__product">Sản phẩm</th>
+ <th>Giá</th>
+ <th>Số lượng</th>
+ <th>Tổng tiền</th>
+ <th></th>
+ </tr>
+ </thead>
+ <tbody>
+ <?php  $_SESSION['total_cart'] = 0;  ?>
+ <?php $__currentLoopData = $productCart; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $items): $loop = $this->incrementLoopIndices();  ?>
+ <input type="hidden" value="<?php echo \htmlentities($items->cart_id??'', ENT_QUOTES, 'UTF-8', false); ?>" name="cart_id[]">
+ <?php  $price = $items->price_after_reduction ? $items->price_after_reduction : $items->price ;$total =  $price * $items->quantity ; $_SESSION['total_cart'] += $total ; ?>
+ <tr>
+ <td class="shoping__cart__item">
+ <a href="<?php echo \htmlentities(route('productDetail/').$items->products_id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <img src="<?php echo \htmlentities(route('upload/').$items->avata??'', ENT_QUOTES, 'UTF-8', false); ?>" alt="" width="100px">
+ <h5><?php echo \htmlentities($items->product_name??'', ENT_QUOTES, 'UTF-8', false); ?></h5>
+ <span><?php echo \htmlentities($items->name??'', ENT_QUOTES, 'UTF-8', false); ?></span>
+ </a>
+ </td>
+ <td class="shoping__cart__price product__discount__item__text">
+ <div class="shoping__cart__price_customer">
+ <div class="product__item__price"><span style=";font-size: 16px"><?php if($items->price_after_reduction): ?>
+ <?php echo \htmlentities(number_format($items->price, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ
+ <?php else: ?>
+ 0đ
+ <?php endif; ?></span>
+ </div>
+ <div class="price_cart"><?php if($items->price_after_reduction): ?>
+ <?php echo \htmlentities(number_format($items->price_after_reduction, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ
+ <?php else: ?>
+ <?php echo \htmlentities(number_format($items->price, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ
+ <?php endif; ?>
+ </div>
+ </div>
+ </td>
+ <td class="shoping__cart__quantity">
+ <div class="quantity">
+ <button class="pro-qty clickQuantity" type="button">
+ <input type="number" value="<?php echo \htmlentities($items->quantity??'', ENT_QUOTES, 'UTF-8', false); ?>" name="quantity[]" max="<?php echo \htmlentities($items->quantity_max??'', ENT_QUOTES, 'UTF-8', false); ?>" min="1">
+ </button>
+ </div>
+ </td>
+ <td class="shoping__cart__total">
+ <?php echo \htmlentities(number_format($total, 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ
+ </td>
+ <td class="shoping__cart__item__close">
+ <a href="<?php echo \htmlentities(route('cartDelete/').$items->cart_id??'', ENT_QUOTES, 'UTF-8', false); ?>" onclick="return confirm('Bạn muốn xóa sản phẩm này khỏi giỏ hàng ?')"><span class="icon_close"></span></a>
+ </td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <?php endif; ?>
+ </tbody>
+ </table>
+ <?php if(isset($_SESSION['errors']) && isset($_GET['msg'])): ?>
+ <div style="color: red"><?php echo \htmlentities($_SESSION['errors']['quantity']??'', ENT_QUOTES, 'UTF-8', false); ?></div>
+ <?php endif; ?>
+ </div>
+ </div>
+ </div>
+ <?php if(!empty($productCart)): ?>
+ <div class="row">
+ <div class="col-lg-12">
+ <div class="shoping__cart__btns">
+ <a href="<?php echo \htmlentities(route('shop')??'', ENT_QUOTES, 'UTF-8', false); ?>" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+ <button type="submit" class="primary-btn cart-btn cart-btn-right" style=" border:none;" name="update"><span class="icon_loading"></span> Cập nhật</button>
+ </div>
+ </div>
+
+ <div class="col-lg-6 mt-5">
+ <div class="row">
+ <div class="col-lg-12 shoping_option">
+ <h5>Danh sách mã giảm giá</h5>
+ <div>
+ <select class="form-select" aria-label="Default select example" id="discount-cart" name="discount">
+ <option value="0" selected>Chọn mã giảm giá cho đơn hàng</option>
+ <?php $__currentLoopData = $discount; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $items): $loop = $this->incrementLoopIndices();  ?>
+ <?php if($items->minimum_amount <= $_SESSION['total_cart']): ?>
+ <option value="<?php echo \htmlentities($items->id??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($items->name??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php else: ?>
+ <option value="<?php echo \htmlentities($items->id??'', ENT_QUOTES, 'UTF-8', false); ?>" disabled><?php echo \htmlentities($items->name??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <span id="errorsKeyword" style="color: red"></span>
+ <?php if(isset($_SESSION['errors']) && isset($_GET['msg'])): ?>
+ <div style="color: red" id="errorsKeyword2"><?php echo \htmlentities($_SESSION['errors']['keyword']??'', ENT_QUOTES, 'UTF-8', false); ?></div>
+ <?php endif; ?>
+ <?php if(isset($_SESSION['success']) && isset($_GET['msg'])): ?>
+ <div class="mt-3 " style="color: green"><?php echo \htmlentities($_SESSION['success']??'', ENT_QUOTES, 'UTF-8', false); ?></div>
+ <?php endif; ?>
+
+ </div>
+ </div>
+ <div class="row mt-5">
+ <div class="col-lg-12 shoping_option">
+ <h5>Phương Thức Thanh Toán</h5>
+ <div class="payment_address mt-3">
+ <?php $__currentLoopData = $payment; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $items): $loop = $this->incrementLoopIndices();  ?>
+ <?php if($items->default == 1): ?>
+ <div class="form-check">
+ <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault1" value="<?php echo \htmlentities($items->id??'', ENT_QUOTES, 'UTF-8', false); ?>" checked>
+ <label class="form-check-label" for="flexRadioDefault1">
+ <?php echo \htmlentities($items->name??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ </label>
+ </div>
+ <?php else: ?>
+ <div class="form-check">
+ <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault1" value="<?php echo \htmlentities($items->id??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <label class="form-check-label" for="flexRadioDefault1">
+ <?php echo \htmlentities($items->name??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ </label>
+ </div>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+ <span id="errorsKeyword" style="color: red"></span>
+ </div>
+ </div>
+ <div class="row mt-5">
+ <div class="col-lg-12 shoping_option" >
+ <h5>Địa chỉ giao hàng</h5>
+ <div class="mt-3">
+ <select aria-label="Default select example" id="address" name="address">
+ <?php $__currentLoopData = $address; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $items): $loop = $this->incrementLoopIndices();  ?>
+ <option value="<?php echo \htmlentities($items->id??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($items->name .'/'. $items->phone.'/'.$items->address_detail??'', ENT_QUOTES, 'UTF-8', false); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <div class="contact__widget">
+ <a href="<?php echo \htmlentities(route('address/add')??'', ENT_QUOTES, 'UTF-8', false); ?>"><span class="icon_pin_alt"></span><span>Thêm địa chỉ </span></a>
+ </div>
+ <span id="errorsKeyword" style="color: red"></span>
+ </div>
+ </div>
+
+ </div>
+ <div class="col-lg-6">
+ <div class="shoping__checkout">
+ <h5>Cart Total</h5>
+ <ul>
+ <li>Giá trị giảm<span id="value"></span></li>
+ <li>Áp dụng mã giảm giá<span id="apply">0đ</span></li>
+ <li>Giá cuối <span id="total_price"><?php echo \htmlentities(number_format($_SESSION['total_cart'], 0, ',', '.')??'', ENT_QUOTES, 'UTF-8', false); ?>đ</span>
+ </li>
+ </ul>
+ <input type="hidden" value="<?php echo \htmlentities($_SESSION['total_cart']??'', ENT_QUOTES, 'UTF-8', false); ?>" name="total_cart">
+ <button type="submit" name="checkout" class="primary-btn" style="border: none">PROCEED TO CHECKOUT</button>
+ </div>
+ </div>
+
+ </div>
+ <?php endif; ?>
+ </div>
+</section>
+</form>
+<script src="<?php echo \htmlentities(BASE_URL.'source-user/customer/cartAjax.js'??'', ENT_QUOTES, 'UTF-8', false); ?>"></script>
+<!-- Shoping Cart Section End -->
+<?php $this->stopSection(); ?>
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layout-user.main'); } ?>
